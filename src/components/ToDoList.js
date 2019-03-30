@@ -6,7 +6,8 @@ import ListItem from './ListItem'
 class ToDoList extends Component {
   state = {
     newItemText: '',
-    todoList: []
+    todoList: [],
+    listKey: ''
     // accessToken: 'cohort-xiii'
   }
 
@@ -50,12 +51,34 @@ class ToDoList extends Component {
   }
 
   deleteItem = item => {
-    const url = `https://localhost:5001/api/list/${item.id}?access_token=${
-      this.state.accessToken
-    }`
+    const url = `https://localhost:5001/api/list/${item.id}`
+
+    // ?access_token=${this.state.accessToken}
+
     axios.delete(url).then(resp => {
       this.getListFromAPI()
     })
+  }
+
+  editItem = event => {
+    // event.preventDefault()
+    this.setState({
+      listKey: this.props.key
+    })
+    axios
+      .put(`https://localhost:5001/api/list/${this.state.listKey}`, {
+        listItem: this.state.newItemText,
+        isDone: false,
+        dateOfCompletion: null
+      })
+      .then(resp => {
+        // get lateset list form API
+        this.getListFromAPI()
+        // update state to clear out the input field
+        this.setState({
+          newItemText: ''
+        })
+      })
   }
 
   addItemToApi = event => {
@@ -118,6 +141,8 @@ class ToDoList extends Component {
                 key={item.id}
                 item={item}
                 deleteItem={this.deleteItem}
+                text={item.listItem}
+                editItem={this.editItem}
               />
             )
           })}

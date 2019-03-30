@@ -3,12 +3,16 @@ import React, { Component } from 'react'
 class ListItem extends Component {
   render() {
     return (
-      <li
-        onClick={() => this.props.deleteItem(this.props.item)}
-        className={this.props.item.completed ? 'completed-item' : ''}
-      >
-        {this.props.item.text}
-      </li>
+      <section>
+        <li
+          onClick={() => this.props.deleteItem(this.props.item)}
+          className={this.props.item.completed ? 'completed-item' : ''}>
+          {this.props.text}
+        </li>
+        <button onClick={() => this.props.editItem(this.props.item)}>
+          Edit
+        </button>
+      </section>
     )
   }
 }
