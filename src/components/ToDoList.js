@@ -6,14 +6,15 @@ import ListItem from './ListItem'
 class ToDoList extends Component {
   state = {
     newItemText: '',
-    todoList: [],
-    accessToken: 'cohort-xiii'
+    todoList: []
+    // accessToken: 'cohort-xiii'
   }
 
   getApiUrl = () => {
-    return `https://one-list-api.herokuapp.com/items?access_token=${
-      this.state.accessToken
-    }`
+    return 'https://localhost:5001/api/List'
+    // `https://one-list-api.herokuapp.com/items?access_token=${
+    // this.state.accessToken
+    // }`
   }
 
   updateStateWithNewItem = event => {
@@ -25,17 +26,17 @@ class ToDoList extends Component {
   componentDidMount() {
     this.getListFromAPI()
     // check local storage for a token
-    const token = localStorage.getItem('list-access-token')
-    if (token) {
-      this.setState(
-        {
-          accessToken: token
-        },
-        () => {
-          this.getListFromAPI()
-        }
-      )
-    }
+    // const token = localStorage.getItem('list-access-token')
+    // if (token) {
+    //   this.setState(
+    //     {
+    //       accessToken: token
+    //     },
+    //     () => {
+    //       this.getListFromAPI()
+    //     }
+    //   )
+    // }
   }
 
   getListFromAPI = () => {
@@ -49,9 +50,9 @@ class ToDoList extends Component {
   }
 
   deleteItem = item => {
-    const url = `https://one-list-api.herokuapp.com/items/${
-      item.id
-    }?access_token=${this.state.accessToken}`
+    const url = `https://localhost:5001/api/list/${item.id}?access_token=${
+      this.state.accessToken
+    }`
     axios.delete(url).then(resp => {
       this.getListFromAPI()
     })
@@ -61,9 +62,9 @@ class ToDoList extends Component {
     event.preventDefault()
     axios
       .post(this.getApiUrl(), {
-        item: {
-          text: this.state.newItemText
-        }
+        listItem: this.state.newItemText,
+        isDone: false,
+        dateOfCompletion: null
       })
       .then(resp => {
         // get lateset list form API
@@ -75,10 +76,10 @@ class ToDoList extends Component {
       })
   }
 
-  generateRandomToken = () => {
-    // creat a new string that is 20 random characters long
-    return Math.floor(Math.random() * Math.pow(10, 20)).toString()
-  }
+  // generateRandomToken = () => {
+  //   // creat a new string that is 20 random characters long
+  //   return Math.floor(Math.random() * Math.pow(10, 20)).toString()
+  // }
 
   resetList = () => {
     // reset the state
@@ -88,14 +89,14 @@ class ToDoList extends Component {
     this.setState(
       {
         todoList: [],
-        newItemText: '',
-        accessToken: this.generateRandomToken()
+        newItemText: ''
+        // accessToken: this.generateRandomToken()
       },
       () => {
-        console.log(this.state.accessToken)
+        // console.log(this.state.accessToken)
         this.getListFromAPI()
         // store the new token in localstorage
-        localStorage.setItem('list-access-token', this.state.accessToken)
+        // localStorage.setItem('list-access-token', this.state.accessToken)
       }
     )
   }
