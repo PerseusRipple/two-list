@@ -7,7 +7,7 @@ class ToDoList extends Component {
   state = {
     newItemText: '',
     todoList: [],
-    listKey: ''
+    edited: false
     // accessToken: 'cohort-xiii'
   }
 
@@ -60,25 +60,25 @@ class ToDoList extends Component {
     })
   }
 
-  editItem = event => {
+  editItem = () => {
     // event.preventDefault()
     this.setState({
-      listKey: this.props.key
+      edited: true
     })
-    axios
-      .put(`https://localhost:5001/api/list/${this.state.listKey}`, {
-        listItem: this.state.newItemText,
-        isDone: false,
-        dateOfCompletion: null
-      })
-      .then(resp => {
-        // get lateset list form API
-        this.getListFromAPI()
-        // update state to clear out the input field
-        this.setState({
-          newItemText: ''
-        })
-      })
+    // axios
+    //   .put(`https://localhost:5001/api/list/${this.state.listKey}`, {
+    //     listItem: this.state.newItemText,
+    //     isDone: false,
+    //     dateOfCompletion: null
+    //   })
+    //   .then(resp => {
+    //     // get lateset list form API
+    //     this.getListFromAPI()
+    //     // update state to clear out the input field
+    //     this.setState({
+    //       newItemText: ''
+    //     })
+    //   })
   }
 
   addItemToApi = event => {
