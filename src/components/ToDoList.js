@@ -61,25 +61,20 @@ class ToDoList extends Component {
     })
   }
 
-  editItem = () => {
-    // event.preventDefault()
-    this.setState({
-      edited: true
-    })
-    // axios
-    //   .put(`https://localhost:5001/api/list/${this.state.listKey}`, {
-    //     listItem: this.state.newItemText,
-    //     isDone: false,
-    //     dateOfCompletion: null
-    //   })
-    //   .then(resp => {
-    //     // get lateset list form API
-    //     this.getListFromAPI()
-    //     // update state to clear out the input field
-    //     this.setState({
-    //       newItemText: ''
-    //     })
-    //   })
+  editItem = item => {
+    axios
+      .put(`https://localhost:5001/api/list/put/${item.id}`, {
+        listItem: item.listItem,
+        isDone: item.isDone,
+        isDueToday: true,
+        dateOfCompletion: item.dateOfCompletion
+      })
+      .then(resp => {
+        // get lateset list form API
+        this.getListFromAPI()
+        console.log(resp)
+        // update state to clear out the input field
+      })
   }
 
   changeItem = key => {
@@ -141,8 +136,8 @@ class ToDoList extends Component {
           newItemText={this.state.newItemText}
           updateStateWithNewItem={this.updateStateWithNewItem}
         />
-        <p className='output' />
-        <ol className='todo-list'>
+        <p className="output" />
+        <ol className="todo-list">
           {this.state.todoList.map(item => {
             return (
               <ListItem
@@ -152,6 +147,7 @@ class ToDoList extends Component {
                 text={item.listItem}
                 editItem={this.editItem}
                 changeItem={this.changeItem}
+                dueDate={item.isDueToday}
               />
             )
           })}
