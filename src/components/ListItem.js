@@ -9,19 +9,19 @@ class ListItem extends Component {
           className={this.props.item.completed ? 'completed-item' : ''}
         >
           {this.props.text}
-          <button
-            className='edit-button'
-            onClick={() => this.props.editItem(this.props.item)}
-          >
-            Edit
-          </button>
-          <button
-            className='today-button'
-            onCLick={() => this.props.changeItem(this.props.item)}
-          >
-            Due Today
-          </button>
         </li>
+        <button
+          className='edit-button'
+          onClick={() => this.props.editItem(this.props.item)}
+        >
+          Edit
+        </button>
+        <button
+          className='today-button'
+          onCLick={() => this.props.changeItem(this.props.key)}
+        >
+          Due Today
+        </button>
       </section>
     )
   }

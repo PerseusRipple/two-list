@@ -52,6 +52,6 @@ form button,
   border-radius: 5%;
 }
 
-.today-button:active {
-  background-color: aquamarine;
+.today-button:focus {
+  background-color: rgb(229, 253, 14);
 }

@@ -7,7 +7,8 @@ class ToDoList extends Component {
   state = {
     newItemText: '',
     todoList: [],
-    edited: false
+    edited: false,
+    changeItem: true
     // accessToken: 'cohort-xiii'
   }
 
@@ -79,6 +80,13 @@ class ToDoList extends Component {
     //       newItemText: ''
     //     })
     //   })
+  }
+
+  changeItem = key => {
+    const url = `https://localhost:5001/api/list/${key}`
+    axios.put(url).then(resp => {
+      this.getListFromAPI()
+    })
   }
 
   addItemToApi = event => {
