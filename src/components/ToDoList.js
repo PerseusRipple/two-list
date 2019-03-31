@@ -133,8 +133,8 @@ class ToDoList extends Component {
           newItemText={this.state.newItemText}
           updateStateWithNewItem={this.updateStateWithNewItem}
         />
-        <p className="output" />
-        <ol className="todo-list">
+        <p className='output' />
+        <ol className='todo-list'>
           {this.state.todoList.map(item => {
             return (
               <ListItem
@@ -143,6 +143,7 @@ class ToDoList extends Component {
                 deleteItem={this.deleteItem}
                 text={item.listItem}
                 editItem={this.editItem}
+                changeItem={this.changeItem}
               />
             )
           })}
